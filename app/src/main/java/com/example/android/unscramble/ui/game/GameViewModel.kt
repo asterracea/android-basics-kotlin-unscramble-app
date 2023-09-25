@@ -50,6 +50,14 @@ class GameViewModel : ViewModel() {
         super.onCleared()
         Log.d("GameFragment", "GameViewModel destroyed!")
     }
+
+    fun isUserWordCorrect(playerWord: String): Boolean {
+        if (playerWord.equals(currentWord, true)) {
+            increaseScore()
+            return true
+        }
+        return false
+    }
 }
 /*
 * Returns true if the current word count is less than MAX_NO_OF_WORDS.
