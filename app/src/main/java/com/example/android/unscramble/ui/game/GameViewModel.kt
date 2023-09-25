@@ -12,11 +12,10 @@ class GameViewModel : ViewModel() {
     private var _currentWordCount = 0
     val currentWordCount: Int
         get() = _currentWordCount
+
     private lateinit var _currentScrambledWord: String
     val currentScrambledWord: String
         get() = _currentScrambledWord
-
-
 
     private var wordsList: MutableList<String> = mutableListOf()
     private lateinit var currentWord: String
@@ -30,6 +29,7 @@ class GameViewModel : ViewModel() {
         super.onCleared()
         Log.d("GameFragment", "GameViewModel destroyed!")
     }
+
     private fun getNextWord() {
         currentWord = allWordsList.random()
         val tempWord = currentWord.toCharArray()
@@ -45,8 +45,8 @@ class GameViewModel : ViewModel() {
             ++_currentWordCount
             wordsList.add(currentWord)
         }
-
     }
+
     fun reinitializeData() {
         _score = 0
         _currentWordCount = 0
@@ -65,14 +65,15 @@ class GameViewModel : ViewModel() {
         }
         return false
     }
-}
-/*
+
+    /*
 * Returns true if the current word count is less than MAX_NO_OF_WORDS.
 * Updates the next word.
 */
-fun nextWord(): Boolean {
-    return if (currentWordCount < MAX_NO_OF_WORDS) {
-        getNextWord()
-        true
-    } else false
+    fun nextWord(): Boolean {
+        return if (_currentWordCount < MAX_NO_OF_WORDS) {
+            getNextWord()
+            true
+        } else false
+    }
 }

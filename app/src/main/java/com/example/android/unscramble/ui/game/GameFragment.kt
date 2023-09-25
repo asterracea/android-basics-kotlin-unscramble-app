@@ -51,7 +51,6 @@ class GameFragment : Fragment() {
                 "Score: ${viewModel.score} WordCount: ${viewModel.currentWordCount}")
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
