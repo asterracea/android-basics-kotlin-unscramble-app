@@ -9,7 +9,9 @@ class GameViewModel : ViewModel() {
     val score: Int
         get() = _score
 
-    private var currentWordCount = 0
+    private var _currentWordCount = 0
+    val currentWordCount: Int
+        get() = _currentWordCount
     private lateinit var _currentScrambledWord: String
     val currentScrambledWord: String
         get() = _currentScrambledWord
@@ -19,6 +21,15 @@ class GameViewModel : ViewModel() {
     private var wordsList: MutableList<String> = mutableListOf()
     private lateinit var currentWord: String
 
+    init {
+        Log.d("GameFragment", "GameViewModel created!")
+        getNextWord()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("GameFragment", "GameViewModel destroyed!")
+    }
     private fun getNextWord() {
         currentWord = allWordsList.random()
         val tempWord = currentWord.toCharArray()
@@ -31,24 +42,20 @@ class GameViewModel : ViewModel() {
             getNextWord()
         } else {
             _currentScrambledWord = String(tempWord)
-            ++currentWordCount
+            ++_currentWordCount
             wordsList.add(currentWord)
         }
 
     }
-
-    init {
-        Log.d("GameFragment", "GameViewModel created!")
+    fun reinitializeData() {
+        _score = 0
+        _currentWordCount = 0
+        wordsList.clear()
         getNextWord()
     }
 
     private fun increaseScore() {
         _score += SCORE_INCREASE
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.d("GameFragment", "GameViewModel destroyed!")
     }
 
     fun isUserWordCorrect(playerWord: String): Boolean {
