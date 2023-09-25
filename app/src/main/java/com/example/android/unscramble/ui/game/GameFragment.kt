@@ -105,6 +105,7 @@ class GameFragment : Fragment() {
     */
     private fun showFinalScoreDialog() {
         MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.congratulations))
     }
 
     /*
