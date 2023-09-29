@@ -14,7 +14,7 @@ class GameViewModel : ViewModel() {
         get() = _currentWordCount
 
     private val _currentScrambledWord = MutableLiveData<String>()
-    val currentScrambledWord: String
+    val currentScrambledWord: LiveData<String>
         get() = _currentScrambledWord
 
     private var wordsList: MutableList<String> = mutableListOf()
