@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import com.example.android.unscramble.R
 import com.example.android.unscramble.databinding.GameFragmentBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -58,9 +59,18 @@ class GameFragment : Fragment() {
         binding.submit.setOnClickListener { onSubmitWord() }
         binding.skip.setOnClickListener { onSkipWord() }
         // Update the UI
-        binding.score.text = getString(R.string.score, 0)
-        binding.wordCount.text = getString(
-                R.string.word_count, 0, MAX_NO_OF_WORDS)
+        //binding.score.text = getString(R.string.score, 0)
+        //binding.wordCount.text = getString(
+              //  R.string.word_count, 0, MAX_NO_OF_WORDS)
+
+        // Observe the currentScrambledWord LiveData.
+       // viewModel.currentScrambledWord.observe()
+
+        // Observe the scrambledCharArray LiveData, passing in the LifecycleOwner and the observer.
+       viewModel.currentScrambledWord.observe(viewLifecycleOwner,
+            { newWord ->
+                binding.textViewUnscrambledWord.text = newWord
+            })
     }
 
     /*
@@ -155,5 +165,6 @@ class GameFragment : Fragment() {
      */
     private fun updateNextWordOnScreen() {
         binding.textViewUnscrambledWord.text = viewModel.currentScrambledWord
+
     }
 }
