@@ -1,5 +1,8 @@
 package com.example.android.unscramble.ui.game
 
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.TtsSpan
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +10,6 @@ import androidx.lifecycle.ViewModel
 import kotlin.math.absoluteValue
 
 class GameViewModel : ViewModel() {
-
     private val _score = MutableLiveData(0)
     val score: LiveData<Int>
         get() = _score
@@ -17,8 +19,21 @@ class GameViewModel : ViewModel() {
         get() = _currentWordCount
 
     private val _currentScrambledWord = MutableLiveData<String>()
-    val currentScrambledWord: LiveData<String>
-        get() = _currentScrambledWord
+    val currentScrambledWord: LiveData<Spannable> = Transformations.map(_currentScrambledWord) {
+        if (it == null) {
+            SpannableString("")
+        } else {
+            val scrambledWord = it.toString()
+            val spannable: Spannable = SpannableString(scrambledWord)
+            spannable.setSpan(
+                TtsSpan.VerbatimBuilder(scrambledWord).build(),
+                0,
+                scrambledWord.length,
+                Spannable.SPAN_INCLUSIVE_INCLUSIVE
+            )
+            spannable
+        }
+    }
 
     private var wordsList: MutableList<String> = mutableListOf()
     private lateinit var currentWord: String
