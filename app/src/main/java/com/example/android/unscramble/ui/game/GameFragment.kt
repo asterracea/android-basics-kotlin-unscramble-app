@@ -140,7 +140,6 @@ class GameFragment : Fragment() {
         activity?.finish()
     }
 
-
     /*
     * Sets and resets the text field error status.
     */
